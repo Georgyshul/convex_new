@@ -17,6 +17,13 @@ class R2Point:
     def area(a, b, c):
         return 0.5 * ((a.x - c.x) * (b.y - c.y) - (a.y - c.y) * (b.x - c.x))
 
+    # Пересекаются ли два отрезка?
+    def intersect(a, b, c, d):
+        p = R2Point(b.x - a.x, b.y - a.y)
+        q = R2Point(d.x - c.x, d.y - c.y)
+        if cross(p, R2Point(a.x - c.x, a.y - c.y)) * cross(p, R2Point(a.x - d.x, a.y - d.y)) < 0 and
+           cross(q, R2Point(a.x - c.x, a.y - c.y)) * cross(q, R2Point(a.x - d.x, a.y - d.y)) < 0
+
     # Лежат ли точки на одной прямой?
     @staticmethod
     def is_triangle(a, b, c):
