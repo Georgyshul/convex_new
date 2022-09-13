@@ -11,6 +11,9 @@ class Figure:
     def area(self):
         return 0.0
 
+    def summary_angle(self):
+        return 0.0
+
 
 class Void(Figure):
     """ "Hульугольник" """

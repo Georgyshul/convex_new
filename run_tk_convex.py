@@ -2,6 +2,7 @@
 from tk_drawer import TkDrawer
 from r2point import R2Point
 from convex import Void, Point, Segment, Polygon
+from run_convex import get_square
 
 
 def void_draw(self, tk):
@@ -31,7 +32,14 @@ setattr(Polygon, 'draw', polygon_draw)
 tk = TkDrawer()
 f = Void()
 tk.clean()
+"""
+get_square()
 
+tk.draw_line(a, b)
+tk.draw_line(b, c)
+tk.draw_line(c, d)
+tk.draw_line(d, a)
+"""
 try:
     while True:
         f = f.add(R2Point())
