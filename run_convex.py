@@ -1,18 +1,17 @@
 #!/usr/bin/env -S python3 -B
 from r2point import R2Point
-from convex import Void
+from convex import Figure, Void
 
 def get_square():
     print("Введите координаты двух диагональных точек квадрата")
-    a = R2Point()
-    b = R2Point()
-    c = R2Point(a.x, b.y)
-    d = R2Point(b.x, a.y)
-    return a, b, c, d
+    Figure.p1 = R2Point()
+    Figure.p3 = R2Point()
+    Figure.p2 = R2Point(Figure.p1.x, Figure.p3.y)
+    Figure.p4 = R2Point(Figure.p3.x, Figure.p1.y)
 
 f = Void()
 try:
-    a, b, c, d = get_square()
+    get_square()
     print("Введите координаты точек выпуклой оболочки")
     while True:
         f = f.add(R2Point())

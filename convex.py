@@ -51,6 +51,9 @@ class Segment(Figure):
         else:
             return self
 
+    def summary_angle(self):
+        return R2Point.intersect_square(self.p, self.q, self.p1, self.p2, self.p3, self.p4)
+
 class Polygon(Figure):
     """ Многоугольник """
 
@@ -65,12 +68,18 @@ class Polygon(Figure):
             self.points.push_first(c)
         self._perimeter = a.dist(b) + b.dist(c) + c.dist(a)
         self._area = abs(R2Point.area(a, b, c))
+        self._angle = R2Point.intersect_square(a, b, self.p1, self.p2, self.p3, self.p4) + \
+            + R2Point.intersect_square(b, c, self.p1, self.p2, self.p3, self.p4) + \
+            + R2Point.intersect_square(a, c, self.p1, self.p2, self.p3, self.p4)
 
     def perimeter(self):
         return self._perimeter
 
     def area(self):
         return self._area
+
+    def summary_angle(self):
+        return self._angle
 
     # добавление новой точки
     def add(self, t):
@@ -89,12 +98,20 @@ class Polygon(Figure):
             self._area += abs(R2Point.area(t,
                                            self.points.last(),
                                            self.points.first()))
+            self._angle -= R2Point.intersect_square(self.points.first(),
+                                                    self.points.last(),
+                                                    self.p1, self.p2,
+                                                    self.p3, self.p4)
 
             # удаление освещённых рёбер из начала дека
             p = self.points.pop_first()
             while t.is_light(p, self.points.first()):
                 self._perimeter -= p.dist(self.points.first())
                 self._area += abs(R2Point.area(t, p, self.points.first()))
+                self._angle -= R2Point.intersect_square(p,
+                                                        self.points.first(),
+                                                        self.p1, self.p2,
+                                                        self.p3, self.p4)
                 p = self.points.pop_first()
             self.points.push_first(p)
 
@@ -103,12 +120,24 @@ class Polygon(Figure):
             while t.is_light(self.points.last(), p):
                 self._perimeter -= p.dist(self.points.last())
                 self._area += abs(R2Point.area(t, p, self.points.last()))
+                self._angle -= R2Point.intersect_square(p,
+                                                        self.points.first(),
+                                                        self.p1, self.p2,
+                                                        self.p3, self.p4)
                 p = self.points.pop_last()
             self.points.push_last(p)
 
             # добавление двух новых рёбер
             self._perimeter += t.dist(self.points.first()) + \
                 t.dist(self.points.last())
+            self._angle += R2Point.intersect_square(t,
+                                                    self.points.first(),
+                                                    self.p1, self.p2,
+                                                    self.p3, self.p4)
+            self._angle -= R2Point.intersect_square(t,
+                                                    self.points.first(),
+                                                    self.p1, self.p2,
+                                                    self.p3, self.p4)
             self.points.push_first(t)
 
         return self

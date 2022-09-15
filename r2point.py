@@ -49,6 +49,14 @@ class R2Point:
         else:
             return False
 
+    @staticmethod
+    def intersect_square(p, q, a, b, c, d):
+        angle = R2Point.angle(p, q, a, b)
+        angle += R2Point.angle(p, q, b, c)
+        angle += R2Point.angle(p, q, c, d)
+        angle += R2Point.angle(p, q, d, a)
+        return angle
+
     # Скалярное произведение двухмерных векторов
     @staticmethod
     def dot(a, b):
