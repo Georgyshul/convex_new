@@ -70,3 +70,35 @@ class TestR2Point:
     def test_is_light4(self):
         a, b = R2Point(0.0, 0.0), R2Point(1.0, 0.0)
         assert R2Point(0.5, -0.5).is_light(a, b) is True
+
+    # Тесты метода intersect
+    def test_intersect1(self):
+        p1, p2 = R2Point(0.0, 0.0), R2Point(2.0, 2.0)
+        p3, p4 = R2Point(0.0, 0.0), R2Point(1.0, 0.0)
+        assert R2Point.intersect(p1, p2, p3, p4) is True
+
+    def test_intersect2(self):
+        p1, p2 = R2Point(0.0, 0.0), R2Point(2.0, 2.0)
+        p3, p4 = R2Point(0.0, -1.0), R2Point(1.0, 0.0)
+        assert R2Point.intersect(p1, p2, p3, p4) is False
+
+    def test_intersect3(self):
+        p1, p2 = R2Point(0.0, 0.0), R2Point(2.0, 2.0)
+        p3, p4 = R2Point(-1.0, -1.0), R2Point(3.0, 3.0)
+        assert R2Point.intersect(p1, p2, p3, p4) is True
+
+    # Тесты метода angle
+    def test_angle1(self):
+        p1, p2 = R2Point(0.0, 0.0), R2Point(2.0, 2.0)
+        p3, p4 = R2Point(0.0, -1.0), R2Point(1.0, 0.0)
+        assert R2Point.angle(p1, p2, p3, p4) == 0
+
+    def test_angle2(self):
+        p1, p2 = R2Point(0.0, 0.0), R2Point(2.0, 2.0)
+        p3, p4 = R2Point(0.0, 0.0), R2Point(1.0, 0.0)
+        assert R2Point.angle(p1, p2, p3, p4) == 45.0
+
+    def test_angle3(self):
+        p1, p2 = R2Point(0.0, 0.0), R2Point(2.0, 2.0)
+        p3, p4 = R2Point(0.0, 0.0), R2Point(1.0, 1.0)
+        assert R2Point.angle(p1, p2, p3, p4) == 0

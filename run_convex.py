@@ -12,7 +12,7 @@ def get_square():
 
 f = Void()
 try:
-    get_square()
+    a, b, c, d = get_square()
     print("Введите координаты точек выпуклой оболочки")
     while True:
         f = f.add(R2Point())

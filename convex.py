@@ -51,7 +51,6 @@ class Segment(Figure):
         else:
             return self
 
-
 class Polygon(Figure):
     """ Многоугольник """
 

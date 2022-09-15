@@ -32,14 +32,14 @@ setattr(Polygon, 'draw', polygon_draw)
 tk = TkDrawer()
 f = Void()
 tk.clean()
-"""
-get_square()
+
+a, b, c, d = get_square()
 
 tk.draw_line(a, b)
 tk.draw_line(b, c)
 tk.draw_line(c, d)
 tk.draw_line(d, a)
-"""
+
 try:
     while True:
         f = f.add(R2Point())

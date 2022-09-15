@@ -1,4 +1,4 @@
-from math import sqrt
+from math import sqrt, acos, pi
 
 
 class R2Point:
@@ -17,8 +17,18 @@ class R2Point:
     def area(a, b, c):
         return 0.5 * ((a.x - c.x) * (b.y - c.y) - (a.y - c.y) * (b.x - c.x))
 
-    # Угол пересечения двух отрезков
-    # Если не пересекаются, возвращаемая величина 0
+    # Угол пересечения двух векторов
+    @staticmethod
+    def angle(p1, p2, p3, p4):
+        if R2Point.intersect(p1, p2, p3, p4):
+            a = R2Point(p2.x - p1.x, p2.y - p1.y)
+            b = R2Point(p4.x - p3.x, p4.y - p3.y)
+            angle = acos(abs(R2Point.dot(a, b)) / (p1.dist(p2) * p3.dist(p4))) * 180 / pi
+            return round(angle, 1)
+        else:
+            return 0
+
+    # Пересекаются ли два отрезка?
     @staticmethod
     def intersect(p1, p2, p3, p4):
         d1 = R2Point.area(p3, p4, p1)
@@ -27,22 +37,22 @@ class R2Point:
         d4 = R2Point.area(p1, p2, p4)
 
         if d1 * d2 < 0 and d3 * d4 < 0:
-           return 1
-        elif d1 == 0 and R2Point.on_segment(p3, p4, p1):
-           return 1
-        elif d2 == 0 and R2Point.on_segment(p3, p4, p2):
-           return 1
-        elif d3 == 0 and R2Point.on_segment(p1, p2, p3):
-           return 1
-        elif d4 == 0 and R2Point.on_segment(p1, p2, p4):
-            return 1
+           return True
+        elif d1 == 0 and p1.is_inside(p3, p4):
+           return True
+        elif d2 == 0 and p2.is_inside(p3, p4):
+           return True
+        elif d3 == 0 and p3.is_inside(p1, p2):
+           return True
+        elif d4 == 0 and p4.is_inside(p1, p2):
+            return True
         else:
-            return 0
+            return False
 
+    # Скалярное произведение двухмерных векторов
     @staticmethod
-    def on_segment(a, b, c):
-        return (min(a.x, b.x) <= c.x <= max(a.x, b.x)
-               and min(a.y, b.y) <= c.y <= max(a.y, b.y))
+    def dot(a, b):
+        return a.x * b.x + a.y * b.y
 
     # Лежат ли точки на одной прямой?
     @staticmethod
@@ -74,5 +84,4 @@ class R2Point:
 
 if __name__ == "__main__":
     p1, p2, p3, p4 = R2Point(), R2Point(), R2Point(), R2Point()
-
-    print(R2Point.intersect(p1, p2, p3, p4))
+    print(R2Point.angle(p1, p2, p3, p4))
