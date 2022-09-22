@@ -14,6 +14,13 @@ class Figure:
     def summary_angle(self):
         return 0.0
 
+    def get_square():
+        print("Введите координаты двух диагональных точек квадрата")
+        Figure.p1 = R2Point()
+        Figure.p3 = R2Point()
+        Figure.p2 = R2Point(Figure.p1.x, Figure.p3.y)
+        Figure.p4 = R2Point(Figure.p3.x, Figure.p1.y)
+
 
 class Void(Figure):
     """ "Hульугольник" """
@@ -134,7 +141,7 @@ class Polygon(Figure):
                                                     self.points.first(),
                                                     self.p1, self.p2,
                                                     self.p3, self.p4)
-            self._angle -= R2Point.intersect_square(t,
+            self._angle += R2Point.intersect_square(t,
                                                     self.points.first(),
                                                     self.p1, self.p2,
                                                     self.p3, self.p4)

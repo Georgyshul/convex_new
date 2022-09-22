@@ -47,8 +47,8 @@ class TkDrawer:
         self.root.update()
 
     # Рисование линии
-    def draw_line(self, p, q):
-        self.canvas.create_line(x(p), y(p), x(q), y(q), fill="black", width=2)
+    def draw_line(self, p, q, color):
+        self.canvas.create_line(x(p), y(p), x(q), y(q), fill=color, width=2)
         self.root.update()
 
 
