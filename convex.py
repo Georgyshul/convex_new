@@ -14,6 +14,7 @@ class Figure:
     def summary_angle(self):
         return 0.0
 
+
 class Void(Figure):
     """ "Hульугольник" """
 
@@ -51,7 +52,11 @@ class Segment(Figure):
             return self
 
     def summary_angle(self):
-        return R2Point.intersect_square(self.p, self.q, self.p1, self.p2, self.p3, self.p4)
+        return R2Point.intersect_square(
+            self.p, self.q,
+            self.p1, self.p2, self.p3, self.p4
+            )
+
 
 class Polygon(Figure):
     """ Многоугольник """
@@ -67,9 +72,18 @@ class Polygon(Figure):
             self.points.push_first(c)
         self._perimeter = a.dist(b) + b.dist(c) + c.dist(a)
         self._area = abs(R2Point.area(a, b, c))
-        self._angle = R2Point.intersect_square(a, b, self.p1, self.p2, self.p3, self.p4) + \
-            + R2Point.intersect_square(b, c, self.p1, self.p2, self.p3, self.p4) + \
-            + R2Point.intersect_square(a, c, self.p1, self.p2, self.p3, self.p4)
+        self._angle = R2Point.intersect_square(
+            a, b,
+            self.p1, self.p2, self.p3, self.p4
+            ) + \
+            + R2Point.intersect_square(
+                b, c,
+                self.p1, self.p2, self.p3, self.p4
+                ) + \
+            + R2Point.intersect_square(
+                a, c,
+                self.p1, self.p2, self.p3, self.p4
+                )
 
     def perimeter(self):
         return self._perimeter

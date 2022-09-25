@@ -11,6 +11,7 @@ def get_square():
     Figure.p2 = R2Point(Figure.p1.x, Figure.p3.y)
     Figure.p4 = R2Point(Figure.p3.x, Figure.p1.y)
 
+
 def void_draw(self, tk):
     pass
 
@@ -53,7 +54,9 @@ try:
         tk.draw_line(Figure.p4, Figure.p1, r)
 
         f.draw(tk)
-        print(f"S = {f.area()}, P = {f.perimeter()}, a = {f.summary_angle()}\n")
+        print(f"S = {f.area()}, P = {f.perimeter()}, "
+              f"a = {round(f.summary_angle(), 1)}\n"
+              )
 except(EOFError, KeyboardInterrupt):
     print("\nStop")
     tk.close()

@@ -23,10 +23,11 @@ class R2Point:
         if R2Point.intersect(p1, p2, p3, p4):
             a = R2Point(p2.x - p1.x, p2.y - p1.y)
             b = R2Point(p4.x - p3.x, p4.y - p3.y)
-            angle = acos(abs(R2Point.dot(a, b)) / (p1.dist(p2) * p3.dist(p4))) * 180 / pi
+            prod = abs(R2Point.dot(a, b))
+            angle = acos(prod / (p1.dist(p2) * p3.dist(p4))) * 180 / pi
             return round(angle, 1)
         else:
-            return 0
+            return 0.0
 
     # Пересекаются ли два отрезка?
     @staticmethod
@@ -37,13 +38,13 @@ class R2Point:
         d4 = R2Point.area(p1, p2, p4)
 
         if d1 * d2 < 0 and d3 * d4 < 0:
-           return True
+            return True
         elif d1 == 0 and p1.is_inside(p3, p4):
-           return True
+            return True
         elif d2 == 0 and p2.is_inside(p3, p4):
-           return True
+            return True
         elif d3 == 0 and p3.is_inside(p1, p2):
-           return True
+            return True
         elif d4 == 0 and p4.is_inside(p1, p2):
             return True
         else:
