@@ -30,6 +30,9 @@ class TestVoid:
     def test_add(self):
         assert isinstance(self.f.add(R2Point(0.0, 0.0)), Point)
 
+    def test_angle(self):
+        assert self.f.summary_angle() == 0
+
 
 class TestPoint:
 
@@ -61,11 +64,16 @@ class TestPoint:
     def test_add2(self):
         assert isinstance(self.f.add(R2Point(1.0, 0.0)), Segment)
 
+    def test_angle(self):
+        assert self.f.summary_angle() == 0
+
 
 class TestSegment:
 
     # Инициализация (выполняется для каждого из тестов класса)
     def setup_method(self):
+        Figure.p1, Figure.p2 = R2Point(0, 0), R2Point(0, 1)
+        Figure.p3, Figure.p4 = R2Point(1, 1), R2Point(1, 0)
         self.f = Segment(R2Point(0.0, 0.0), R2Point(1.0, 0.0))
 
     # Двуугольник является фигурой
@@ -93,14 +101,31 @@ class TestSegment:
         assert isinstance(self.f.add(R2Point(2.0, 0.0)), Segment)
 
     # При добавлении точки двуугольник может превратиться в треугольник
-    def test_add2(self):
+    def test_add3(self):
         assert isinstance(self.f.add(R2Point(0.0, 1.0)), Polygon)
+
+    def test_angle1(self):
+        assert self.f.summary_angle() == 180
+
+    def test_angle2(self):
+        self.g = Segment(R2Point(-1, -1), R2Point(3, 3))
+        assert self.g.summary_angle() == 180
+
+    def test_angle3(self):
+        self.g = Segment(R2Point(0, 2), R2Point(3, 3))
+        assert self.g.summary_angle() == 0
+
+    def test_angle4(self):
+        self.g = Segment(R2Point(0, -0.5), R2Point(0.5, 0))
+        assert self.g.summary_angle() == 45
 
 
 class TestPolygon:
 
     # Инициализация (выполняется для каждого из тестов класса)
     def setup_method(self):
+        Figure.p1, Figure.p2 = R2Point(0, 0), R2Point(0, 4)
+        Figure.p3, Figure.p4 = R2Point(4, 4), R2Point(4, 0)
         self.f = Polygon(
             R2Point(
                 0.0, 0.0), R2Point(
@@ -116,19 +141,19 @@ class TestPolygon:
         assert isinstance(self.f, Polygon)
 
     # Изменение количества вершин многоугольника
-    #   изначально их три
+    # изначально их три
     def test_vertexes1(self):
         assert self.f.points.size() == 3
-    #   добавление точки внутрь многоугольника не меняет их количества
 
+    # добавление точки внутрь многоугольника не меняет их количества
     def test_vertexes2(self):
         assert self.f.add(R2Point(0.1, 0.1)).points.size() == 3
-    #   добавление другой точки может изменить их количество
 
+    # добавление другой точки может изменить их количество
     def test_vertexes3(self):
         assert self.f.add(R2Point(1.0, 1.0)).points.size() == 4
-    #   изменения выпуклой оболочки могут и уменьшать их количество
 
+    # изменения выпуклой оболочки могут и уменьшать их количество
     def test_vertexes4(self):
         assert self.f.add(
             R2Point(
@@ -146,19 +171,55 @@ class TestPolygon:
         assert self.f.add(R2Point(2.0, 2.0)).points.size() == 4
 
     # Изменение периметра многоугольника
-    #   изначально он равен сумме длин сторон
+    # изначально он равен сумме длин сторон
     def test_perimeter1(self):
         assert self.f.perimeter() == approx(2.0 + sqrt(2.0))
-    #   добавление точки может его изменить
 
+    # добавление точки может его изменить
     def test_perimeter2(self):
         assert self.f.add(R2Point(1.0, 1.0)).perimeter() == approx(4.0)
 
     # Изменение площади многоугольника
-    #   изначально она равна (неориентированной) площади треугольника
+    # изначально она равна (неориентированной) площади треугольника
+
     def test_аrea1(self):
         assert self.f.area() == approx(0.5)
-    #   добавление точки может увеличить площадь
 
+    # добавление точки может увеличить площадь
     def test_area2(self):
         assert self.f.add(R2Point(1.0, 1.0)).area() == approx(1.0)
+
+    def test_angle1(self):
+        assert self.f.summary_angle() == 270
+
+    def test_angle2(self):
+        self.f.add(R2Point(-1, 0))
+        assert self.f.summary_angle() == 225
+
+    def test_angle3(self):
+        self.f.add(R2Point(1, 1))
+        assert self.f.summary_angle() == 360
+
+    def test_angle4(self):
+        self.f.add(R2Point(0.5, 0.5))
+        assert self.f.summary_angle() == 270
+
+    def test_angle5(self):
+        self.f.add(R2Point(4, 1)).add(R2Point(4, 0))
+        assert self.f.summary_angle() == 540
+
+    def test_angle6(self):
+        g = Polygon(
+            R2Point(0, -1),
+            R2Point(4, -1),
+            R2Point(2, -3)
+        ).add(R2Point(2, 1))
+        assert g.summary_angle() == 90
+
+    def test_angle7(self):
+        g = Polygon(
+            R2Point(-1, -1),
+            R2Point(5, -1),
+            R2Point(-1, 5)
+        ).add(R2Point(5, 5))
+        assert g.summary_angle() == 0

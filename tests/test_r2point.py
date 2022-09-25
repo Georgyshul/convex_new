@@ -102,3 +102,18 @@ class TestR2Point:
         p1, p2 = R2Point(0.0, 0.0), R2Point(2.0, 2.0)
         p3, p4 = R2Point(0.0, 0.0), R2Point(1.0, 1.0)
         assert R2Point.angle(p1, p2, p3, p4) == 0
+
+    def test_square_angle1(self):
+        p, q = R2Point(-1, -1), R2Point(5, 5)
+        a, b, c, d = R2Point(0, 0), R2Point(0, 3), R2Point(3, 3), R2Point(3, 0)
+        assert R2Point.intersect_square(p, q, a, b, c, d) == 180
+
+    def test_square_angle2(self):
+        p, q = R2Point(0, 4), R2Point(5, 5)
+        a, b, c, d = R2Point(0, 0), R2Point(0, 3), R2Point(3, 3), R2Point(3, 0)
+        assert R2Point.intersect_square(p, q, a, b, c, d) == 0
+
+    def test_square_angle3(self):
+        p, q = R2Point(1, 0), R2Point(2, 0)
+        a, b, c, d = R2Point(0, 0), R2Point(0, 3), R2Point(3, 3), R2Point(3, 0)
+        assert R2Point.intersect_square(p, q, a, b, c, d) == 0
