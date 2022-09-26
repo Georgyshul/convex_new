@@ -18,8 +18,8 @@ try:
     while True:
         f = f.add(R2Point())
         print(f"S = {f.area()}, P = {f.perimeter()}, "
-            f"a = {round(f.summary_angle(), 1)}\n"
-            )
+              f"a = {round(f.summary_angle(), 1)}\n"
+              )
         print()
 except(EOFError, KeyboardInterrupt):
     print("\nStop")
